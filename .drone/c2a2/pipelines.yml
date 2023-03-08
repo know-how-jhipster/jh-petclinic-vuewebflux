@@ -73,7 +73,7 @@ steps :
       ref :
         - "refs/tags/*"
 
-  - name : build-container-feature-image
+  - name : build-container-with-feature
     depends_on :
       - publish-snapshot-jar
     image : plugins/docker
@@ -88,11 +88,11 @@ steps :
       repo : docker-registry.c2a2.com/ujar/jh-petclinic-vuewebflux
       registry : docker-registry.c2a2.com
       tags :
-        - ${DRONE_BRANCH:8}
+        - ${DRONE_BRANCH:22}
     when :
       branch :
         include :
-          - "feature/*"
+          - "feature/containerized-*"
 
   - name : build-container-release-image
     depends_on :
