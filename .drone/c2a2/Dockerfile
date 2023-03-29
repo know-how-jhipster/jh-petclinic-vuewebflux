@@ -1,7 +1,8 @@
-FROM docker-registry.c2a2.com/ujar/openjdk:11.0.16-jre
-
-WORKDIR /app
-
-COPY ./target/*.jar /app/app.jar
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Duser.timezone=UTC -jar /app/app.jar"]
+FROM docker-registry.c2a2.com/ujar/openjdk:11-jre-slim
+ARG BUILD_VERSION
+ENV APPLICATION_BUILD_VERSION=$BUILD_VERSION
+WORKDIR /opt/app
+USER javauser
+COPY ./target/*.jar /opt/app/app.jar
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Duser.timezone=UTC -jar /opt/app/app.jar"]
 EXPOSE 8080
