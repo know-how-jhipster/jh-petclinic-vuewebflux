@@ -27,6 +27,7 @@ steps:
         from_secret: DEPLOYER_PASSWORD
     commands:
       - mvn -version
+      - mvn dependency:resolve
       - mvn clean test -Dstyle.color=always -Dmaven.javadoc.skip=true -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
   - name: static-analysis-gate
