@@ -2,6 +2,7 @@ package org.ujar.jh.petclinic.vuewebflux.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
