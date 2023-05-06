@@ -3,8 +3,6 @@ package org.ujar.jh.petclinic.vuewebflux.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
@@ -64,8 +62,8 @@ import tech.jhipster.web.util.PaginationUtil;
 @RequestMapping("/api/admin")
 public class UserResource {
 
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
-        Arrays.asList(
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES =
+        List.of(
             "id",
             "login",
             "firstName",
@@ -77,8 +75,7 @@ public class UserResource {
             "createdDate",
             "lastModifiedBy",
             "lastModifiedDate"
-        )
-    );
+        );
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
