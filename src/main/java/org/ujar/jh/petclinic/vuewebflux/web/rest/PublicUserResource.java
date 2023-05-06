@@ -1,7 +1,6 @@
 package org.ujar.jh.petclinic.vuewebflux.web.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.slf4j.Logger;
@@ -25,9 +24,8 @@ import tech.jhipster.web.util.PaginationUtil;
 @RequestMapping("/api")
 public class PublicUserResource {
 
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
-        Arrays.asList("id", "login", "firstName", "lastName", "email", "activated", "langKey")
-    );
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES =
+        List.of("id", "login", "firstName", "lastName", "email", "activated", "langKey");
 
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
