@@ -261,7 +261,7 @@ steps :
         from_secret : SVC_CHARTS_REPOSITORY
     commands :
       - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
-      - helm uninstall ${DRONE_REPO_NAME} -n ${DRONE_DEPLOY_TO}-environment
+      - helm uninstall --wait --timeout 2m ${DRONE_REPO_NAME} -n ${DRONE_DEPLOY_TO}-environment
 
 ---
 
@@ -313,7 +313,7 @@ steps :
         from_secret : SVC_CHARTS_REPOSITORY
     commands :
       - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
-      - helm uninstall ${DRONE_REPO_NAME} -n ${DRONE_DEPLOY_TO}-environment
+      - helm uninstall --wait --timeout 2m ${DRONE_REPO_NAME} -n ${DRONE_DEPLOY_TO}-environment
 
 ---
 
