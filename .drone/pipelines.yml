@@ -181,6 +181,8 @@ steps:
         - BUILD_VERSION=${DRONE_COMMIT}
       tags:
         - ${DRONE_BRANCH:22}
+        - ${DRONE_COMMIT}
+
     when:
       branch:
         include:
@@ -212,6 +214,109 @@ steps:
         - "refs/tags/*"
 
 ---
+
+kind : pipeline
+name : PromoteFeatureDeployment
+type : docker
+trigger :
+  event :
+    - promote
+  target :
+    - sit
+  ref :
+    - "refs/heads/feature/containerized-*"
+
+steps :
+  - name : deploy
+    failure : ignore
+    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-11-jdk-focal
+    pull : if-not-exists
+    environment :
+      SVC_CHARTS_REPOSITORY :
+        from_secret : SVC_CHARTS_REPOSITORY
+    commands :
+      - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
+      - helm install ${DRONE_REPO_NAME} ./ --values ./values.yaml --values ./${DRONE_DEPLOY_TO}-values.yaml --set image.tag=${DRONE_COMMIT} -n ${DRONE_DEPLOY_TO}-environment
+
+---
+
+kind : pipeline
+name : RollbackFeatureDeployment
+type : docker
+trigger :
+  event :
+    - rollback
+  target :
+    - sit
+  ref :
+    - "refs/heads/feature/containerized-*"
+
+steps :
+  - name : rollback
+    failure : ignore
+    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-11-jdk-focal
+    pull : if-not-exists
+    environment :
+      SVC_CHARTS_REPOSITORY :
+        from_secret : SVC_CHARTS_REPOSITORY
+    commands :
+      - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
+      - helm uninstall ${DRONE_REPO_NAME} -n ${DRONE_DEPLOY_TO}-environment
+
+---
+
+kind : pipeline
+name : PromoteDeployment
+type : docker
+trigger :
+  event :
+    - promote
+  target :
+    - uat
+    - production
+  ref :
+    - "refs/tags/*"
+
+steps :
+  - name : deploy
+    failure : ignore
+    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-11-jdk-focal
+    pull : if-not-exists
+    environment :
+      SVC_CHARTS_REPOSITORY :
+        from_secret : SVC_CHARTS_REPOSITORY
+    commands :
+      - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
+      - helm install ${DRONE_REPO_NAME} ./ --values ./values.yaml --values ./${DRONE_DEPLOY_TO}-values.yaml --set image.tag=${DRONE_TAG} -n ${DRONE_DEPLOY_TO}-environment
+
+---
+
+kind : pipeline
+name : RollbackDeployment
+type : docker
+trigger :
+  event :
+    - rollback
+  target :
+    - uat
+    - production
+  ref :
+    - "refs/tags/*"
+
+steps :
+  - name : rollback
+    failure : ignore
+    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-11-jdk-focal
+    pull : if-not-exists
+    environment :
+      SVC_CHARTS_REPOSITORY :
+        from_secret : SVC_CHARTS_REPOSITORY
+    commands :
+      - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
+      - helm uninstall ${DRONE_REPO_NAME} -n ${DRONE_DEPLOY_TO}-environment
+
+---
+
 
 kind: pipeline
 name: ManualRelease
