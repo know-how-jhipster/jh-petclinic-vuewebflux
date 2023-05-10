@@ -180,8 +180,7 @@ steps:
         - BASE_IMAGE=docker-registry.continuousdelivery.store/jre:ibm-semeru-runtimes-open-11-jre-focal
         - BUILD_VERSION=${DRONE_COMMIT}
       tags:
-        - ${DRONE_BRANCH:22}
-        - ${DRONE_COMMIT}
+        - ${DRONE_BRANCH:22}-${CI_BUILD_NUMBER}
 
     when:
       branch:
@@ -236,7 +235,7 @@ steps :
         from_secret : SVC_CHARTS_REPOSITORY
     commands :
       - git clone $${SVC_CHARTS_REPOSITORY} charts && cd charts/${DRONE_REPO_NAME}
-      - helm upgrade --install --atomic --wait --timeout 2m ${DRONE_REPO_NAME} ./ --values ./values.yaml --values ./${DRONE_DEPLOY_TO}-values.yaml --set image.tag=${DRONE_COMMIT} -n ${DRONE_DEPLOY_TO}-environment
+      - helm upgrade --install --atomic --wait --timeout 2m ${DRONE_REPO_NAME} ./ --values ./values.yaml --values ./${DRONE_DEPLOY_TO}-values.yaml --set image.tag=${DRONE_BRANCH:22}-${CI_PARENT_BUILD_NUMBER} -n ${DRONE_DEPLOY_TO}-environment
 
 ---
 
