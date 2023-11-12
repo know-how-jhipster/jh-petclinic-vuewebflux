@@ -31,6 +31,7 @@ steps:
       - node --version
       - npm --version
       - npx --version
+      - npm install
       - mvn dependency:resolve
       - mvn clean test -Dstyle.color=always -Dmaven.javadoc.skip=true -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 

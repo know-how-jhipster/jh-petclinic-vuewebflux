@@ -1,6 +1,6 @@
 {
-  "name": "petclinic",
-  "version": "0.0.0",
+  "name": "vuewebflux-petclinic",
+  "version": "23.0.0",
   "private": true,
   "description": "Description for petclinic",
   "license": "UNLICENSED",
