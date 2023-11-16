@@ -33,7 +33,7 @@
     "microfrontends": [],
     "nativeLanguage": "en",
     "otherModules": [],
-    "packageName": "org.ujar.jh.petclinic.vuewebflux",
+    "packageName": "dev.knowhowto.jh.petclinic.vuewebflux",
     "pages": [],
     "prodDatabaseType": "mysql",
     "reactive": true,

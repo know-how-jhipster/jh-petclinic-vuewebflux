@@ -18,7 +18,7 @@ logging:
     ROOT: DEBUG
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG
-    org.ujar.jh.petclinic.vuewebflux: DEBUG
+    dev.knowhowto.jh.petclinic.vuewebflux: DEBUG
 
 spring:
   devtools:
