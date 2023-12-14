@@ -9,7 +9,7 @@ servers:
     description: Development server
   - url: https://localhost:8080/api
     description: Development server with TLS Profile
-paths: {}
+paths: { }
 components:
   responses:
     Problem:
@@ -30,5 +30,5 @@ components:
       description: Basic Authentication
       scheme: basic
 security:
-  - jwt: []
-  - basic: []
+  - jwt: [ ]
+  - basic: [ ]
